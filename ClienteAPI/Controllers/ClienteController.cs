@@ -53,5 +53,29 @@ namespace ClienteAPI.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut("{clienteId}/email-secundario")]
+        public async Task<ActionResult<CreateEmailSecundarioResponse>> CreateEmailSecundario(
+            [FromRoute] string clienteId,
+            [FromBody] CreateEmailSecundarioRequest command
+        )
+        {
+            command.ClienteId = Guid.Parse(clienteId);
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpPut("{clienteId}/endereco-secundario")]
+        public async Task<ActionResult<CreateEnderecoSecundarioResponse>> CreateEnderecoSecundario(
+            [FromRoute] string clienteId,
+            [FromBody] CreateEnderecoSecundarioRequest command
+        )
+        {
+            command.ClienteId = Guid.Parse(clienteId);
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
     }
 }
