@@ -17,6 +17,10 @@ namespace ClienteAPI.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Busca todos os clientes cadastrados
+        /// </summary>
+        /// <returns>Lista com todos os clientes cadastrados com todos os emails e endereços</returns>
         [HttpGet]
         public async Task<ActionResult<GetAllClientesResponse>> GetAll()
         {
@@ -28,6 +32,14 @@ namespace ClienteAPI.Controllers
             return Ok(response.Clientes);
         }
 
+        /// <summary>
+        /// Busca por um cliente específico
+        /// </summary>
+        /// <param name="clienteId">Id do cliente para busca</param>
+        /// <returns>
+        /// Quando o cliente existe: cliente cadastrado com o email principal e endereço principal
+        /// Quando o cliente não existe: NotFound()
+        /// </returns>
         [HttpGet("{clienteId}")]
         public async Task<ActionResult<GetClienteDetalheResponse>> GetDetalhe(
             Guid clienteId
@@ -41,6 +53,13 @@ namespace ClienteAPI.Controllers
             return Ok(cliente);
         }
 
+        /// <summary>
+        /// Cria um cliente com email principal e endereço principal
+        /// </summary>
+        /// <returns>
+        /// Quando criado com sucesso: cliente criado
+        /// Caso ocorra erro: BadRequest()
+        /// </returns>
         [HttpPost]
         public async Task<ActionResult<CreateClienteResponse>> Create(
             [FromBody] CreateClienteRequest command
@@ -54,6 +73,11 @@ namespace ClienteAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Atualiza o cliente, adicionando um email secundário
+        /// </summary>
+        /// <param name="clienteId">Id do cliente a ser atualizado</param>
+        /// <returns>Email secundário cadastrado</returns>
         [HttpPut("{clienteId}/email-secundario")]
         public async Task<ActionResult<CreateEmailSecundarioResponse>> CreateEmailSecundario(
             [FromRoute] string clienteId,
@@ -66,6 +90,11 @@ namespace ClienteAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Atualiza o cliente, adicionando um endereço secundário
+        /// </summary>
+        /// <param name="clienteId">Id do cliente a ser atualizado</param>
+        /// <returns>Endereço secundário cadastrado</returns>
         [HttpPut("{clienteId}/endereco-secundario")]
         public async Task<ActionResult<CreateEnderecoSecundarioResponse>> CreateEnderecoSecundario(
             [FromRoute] string clienteId,

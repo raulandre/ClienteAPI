@@ -19,7 +19,12 @@ builder.Services.AddControllers()
         config.JsonSerializerOptions.WriteIndented = true;
     });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.SwaggerDoc("v1", new() { Title = "ClienteAPI", Version = "v1" });
+    var filePath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+    config.IncludeXmlComments(filePath);
+});
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddDbContext<DataContext>(config => config.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
